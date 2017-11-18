@@ -1,0 +1,131 @@
+html {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.15;
+  font-size: 1rem;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+header {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#168292+0,31b8c4+100 */
+    background: #168292; /* Old browsers */
+    background: -moz-linear-gradient(left, #168292 0%, #31b8c4 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #168292 0%,#31b8c4 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #168292 0%,#31b8c4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#168292', endColorstr='#31b8c4',GradientType=1 ); /* IE6-9 */
+
+    padding: 20px;
+    color: #FFF;
+    font-size: 2rem;
+    font-weight: 200;
+}
+
+header img {    
+    width: 60px;
+    margin-right: 20px
+}
+
+h2 {
+    font-size: 2rem;
+    color: #168292;
+    font-weight: 200;
+    text-align: center;
+}
+
+section {
+    padding:5% 0;
+}
+
+.info-meeting {
+    padding: 20px 0;
+    border-top: #979797 solid 1px;
+    border-bottom: #979797 solid 1px;
+    margin: 70px 0;
+}
+
+
+a {
+    color: #168292;
+    text-decoration: underline;}
+
+a:hover, a:focus {text-decoration: none; color: #168292;}
+
+b {color: #168292;}
+
+.btn-primary {
+    background: #168292;
+    color: #FFFFFF;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: 100;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.select-device {
+    text-align: center;
+}
+
+select{
+    line-height: inherit;
+    border: solid 1px #7E7E7E;
+    padding: 10px;
+    height: 40px;
+}
+
+/*Media queries*/
+
+@media (min-width: 1200px){
+    .container {
+        width: 720px;
+        max-width: 100%;}
+}
+
+
+
+/*tablet paysage*/
+
+@media all and (max-width: 1024px) {
+
+}
+
+/*tablet portrait*/
+@media all and (max-width: 768px) { 
+    
+
+
+}
+
+/*mobile portrait*/
+@media all and (max-width: 732px) {    
+
+    .info-meeting {
+    padding: 20px 0;
+    border-top: #979797 solid 1px;
+    border-bottom: #979797 solid 1px;
+    margin: 30px 0;
+
+}
+
+/*mobile*/
+@media all and (max-width: 480px) { 
+
+    .info-meeting {
+    padding: 20px 0;
+    border-top: #979797 solid 1px;
+    border-bottom: #979797 solid 1px;
+    margin: 30px 0;
+}
+
+
+}
+
+
+
+
