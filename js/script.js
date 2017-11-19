@@ -16,7 +16,7 @@ navigator.getUserMedia = navigator.getUserMedia ||
     navigator.msGetUserMedia;
 
 var ORIGINAL_DOC_TITLE = document.title;
-var video = $('video');
+var video = document.querySelector('video');
 var canvas = document.createElement('canvas'); // offscreen canvas.
 var rafId = null;
 var startTime = null;
@@ -30,14 +30,14 @@ function turnOnCamera() {
     // Note: video.onloadedmetadata doesn't fire in Chrome when using getUserMedia so
     // we have to use setTimeout. See crbug.com/110938.
     setTimeout(function() {
-      video.width = /*320;*/video.clientWidth;
-      video.height = /*240;*/ video.clientHeight;
+      video.width = $('section').width();//320;//video.clientWidth;
+      video.height = ($('section').width()*9)/16;//240;// video.clientHeight;
       // Canvas is 1/2 for performance. Otherwise, getImageData() readback is
       // awful 100ms+ as 640x480.
-      console.log(video.width, video.height);
       canvas.width = video.width;
       canvas.height = video.height;
-      // record();
+
+      record();
 
       // setTimeout(stop, 100);
     }, 1000);
@@ -46,10 +46,12 @@ function turnOnCamera() {
   navigator.getUserMedia({video: true, audio: true}, function(stream) {
     video.src = window.URL.createObjectURL(stream);
     finishVideoSetup_();
+    stream.stop();
   }, function(e) {
     alert('Fine, you get a movie instead of your beautiful face ;)');
     video.src = 'Chrome_ImF.mp4';
     finishVideoSetup_();
+    stream.stop();
   });
 };
 
@@ -58,11 +60,12 @@ function record() {
   var CANVAS_HEIGHT = canvas.height;
   var CANVAS_WIDTH = canvas.width;
 
-  // frames = []; // clear existing frames;
-  // startTime = Date.now();
+  frames = []; // clear existing frames;
+  startTime = Date.now();
 
   function drawVideoFrame_(time) {
     rafId = requestAnimationFrame(drawVideoFrame_);
+
     ctx.drawImage(video, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     // Read back canvas as webp.
@@ -131,6 +134,12 @@ function embedVideoPreview(opt_url) {
   // downloadLink.href = url;
 
   console.log(url);
+}
+
+
+function closeVideo(){
+  stop();
+  $('video').hide();
 }
 
 turnOnCamera();
