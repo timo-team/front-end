@@ -1,74 +1,43 @@
+/*
+Copyright 2017 Google Inc.
 
-(function(exports) {
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-exports.URL = exports.URL || exports.webkitURL;
+    http://www.apache.org/licenses/LICENSE-2.0
 
-exports.requestAnimationFrame = exports.requestAnimationFrame ||
-    exports.webkitRequestAnimationFrame || exports.mozRequestAnimationFrame ||
-    exports.msRequestAnimationFrame || exports.oRequestAnimationFrame;
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
-exports.cancelAnimationFrame = exports.cancelAnimationFrame ||
-    exports.webkitCancelAnimationFrame || exports.mozCancelAnimationFrame ||
-    exports.msCancelAnimationFrame || exports.oCancelAnimationFrame;
+from : https://simpl.info/getusermedia/sources/
+*/
 
-navigator.getUserMedia = navigator.getUserMedia ||
-    navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia;
+'use strict';
 
-var ORIGINAL_DOC_TITLE = document.title;
-var video = document.querySelector('video');
-var canvas = document.createElement('canvas'); // offscreen canvas.
-var rafId = null;
-var startTime = null;
-var endTime = null;
-var frames = [];
-
+var videoElement = document.querySelector('video');
+// var audioSelect = document.querySelector('select#audioSource');
 var videoSelect = document.querySelector('select#videoSource');
 
-videoSelect.onchange = turnOnCamera;
+navigator.mediaDevices.enumerateDevices()
+  .then(gotDevices).then(getStream).catch(handleError);
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices).then(turnOnCamera).catch(handleError);
-
-function turnOnCamera() {
-  video.controls = false;
-
-  var finishVideoSetup_ = function() {
-    // Note: video.onloadedmetadata doesn't fire in Chrome when using getUserMedia so
-    // we have to use setTimeout. See crbug.com/110938.
-    setTimeout(function() {
-      video.width = $('section').width();//320;//video.clientWidth;
-      video.height = ($('section').width()*9)/16;//240;// video.clientHeight;
-      // Canvas is 1/2 for performance. Otherwise, getImageData() readback is
-      // awful 100ms+ as 640x480.
-      canvas.width = video.width;
-      canvas.height = video.height;
-
-      record();
-
-      // setTimeout(stop, 100);
-    }, 1000);
-  };
-
-  navigator.getUserMedia({video: true, audio: false}, function(stream) {
-    video.src = window.URL.createObjectURL(stream);
-    finishVideoSetup_();
-  }, function(e) {
-    alert('Fine, you get a movie instead of your beautiful face ;)');
-    video.src = 'Chrome_ImF.mp4';
-    finishVideoSetup_();
-  });
-};
+audioSelect.onchange = getStream;
+videoSelect.onchange = getStream;
 
 function gotDevices(deviceInfos) {
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
-    // var option = document.createElement('option');
-    // option.value = deviceInfo.deviceId;
-    /*if (deviceInfo.kind === 'audioinput') {
+    var option = document.createElement('option');
+    option.value = deviceInfo.deviceId;
+    if (deviceInfo.kind === 'audioinput') {
       option.text = deviceInfo.label ||
         'microphone ' + (audioSelect.length + 1);
       audioSelect.appendChild(option);
-    } else*/ if (deviceInfo.kind === 'videoinput') {
+    } else if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || 'camera ' +
         (videoSelect.length + 1);
       videoSelect.appendChild(option);
@@ -78,6 +47,137 @@ function gotDevices(deviceInfos) {
   }
 }
 
+function getStream() {
+  if (window.stream) {
+    window.stream.getTracks().forEach(function(track) {
+      track.stop();
+    });
+  }
+
+  var constraints = {
+    audio: {
+      deviceId: {exact: audioSelect.value}
+    },
+    video: {
+      deviceId: {exact: videoSelect.value}
+    }
+  };
+
+  navigator.mediaDevices.getUserMedia(constraints).
+    then(gotStream).catch(handleError);
+}
+
+function gotStream(stream) {
+  window.stream = stream; // make stream available to console
+  videoElement.srcObject = stream;
+
+  video.width = $('section').width();//320;//video.clientWidth;
+  video.height = ($('section').width()*9)/16;//240;// video.clientHeight;
+  // Canvas is 1/2 for performance. Otherwise, getImageData() readback is
+  // awful 100ms+ as 640x480.
+  canvas.width = video.width;
+  canvas.height = video.height;
+
+        record();
+}
+
+function handleError(error) {
+  console.log('Error: ', error);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// (function(exports) {
+//
+// exports.URL = exports.URL || exports.webkitURL;
+//
+// exports.requestAnimationFrame = exports.requestAnimationFrame ||
+//     exports.webkitRequestAnimationFrame || exports.mozRequestAnimationFrame ||
+//     exports.msRequestAnimationFrame || exports.oRequestAnimationFrame;
+//
+// exports.cancelAnimationFrame = exports.cancelAnimationFrame ||
+//     exports.webkitCancelAnimationFrame || exports.mozCancelAnimationFrame ||
+//     exports.msCancelAnimationFrame || exports.oCancelAnimationFrame;
+//
+// navigator.getUserMedia = navigator.getUserMedia ||
+//     navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
+//     navigator.msGetUserMedia;
+//
+// var ORIGINAL_DOC_TITLE = document.title;
+// var video = document.querySelector('video');
+// var canvas = document.createElement('canvas'); // offscreen canvas.
+// var rafId = null;
+// var startTime = null;
+// var endTime = null;
+// var frames = [];
+//
+// var videoSelect = document.querySelector('select#videoSource');
+//
+// videoSelect.onchange = turnOnCamera;
+//
+// navigator.mediaDevices.enumerateDevices().then(gotDevices).then(turnOnCamera).catch(handleError);
+//
+// function turnOnCamera() {
+//   video.controls = false;
+//
+//   var finishVideoSetup_ = function() {
+//     // Note: video.onloadedmetadata doesn't fire in Chrome when using getUserMedia so
+//     // we have to use setTimeout. See crbug.com/110938.
+//     setTimeout(function() {
+//       video.width = $('section').width();//320;//video.clientWidth;
+//       video.height = ($('section').width()*9)/16;//240;// video.clientHeight;
+//       // Canvas is 1/2 for performance. Otherwise, getImageData() readback is
+//       // awful 100ms+ as 640x480.
+//       canvas.width = video.width;
+//       canvas.height = video.height;
+//
+//       record();
+//
+//       // setTimeout(stop, 100);
+//     }, 1000);
+//   };
+//
+//   navigator.getUserMedia({video: true, audio: false}, function(stream) {
+//     video.src = window.URL.createObjectURL(stream);
+//     finishVideoSetup_();
+//   }, function(e) {
+//     alert('Fine, you get a movie instead of your beautiful face ;)');
+//     video.src = 'Chrome_ImF.mp4';
+//     finishVideoSetup_();
+//   });
+// };
+//
+// function gotDevices(deviceInfos) {
+//   for (var i = 0; i !== deviceInfos.length; ++i) {
+//     var deviceInfo = deviceInfos[i];
+//     // var option = document.createElement('option');
+//     // option.value = deviceInfo.deviceId;
+//     /*if (deviceInfo.kind === 'audioinput') {
+//       option.text = deviceInfo.label ||
+//         'microphone ' + (audioSelect.length + 1);
+//       audioSelect.appendChild(option);
+//     } else*/ if (deviceInfo.kind === 'videoinput') {
+//       option.text = deviceInfo.label || 'camera ' +
+//         (videoSelect.length + 1);
+//       videoSelect.appendChild(option);
+//     } else {
+//       console.log('Found one other kind of source/device: ', deviceInfo);
+//     }
+//   }
+// }
+//
 function record() {
   var ctx = canvas.getContext('2d');
   var CANVAS_HEIGHT = canvas.height;
@@ -112,39 +212,39 @@ function record() {
     //   });
     // });
   };
-
-  rafId = requestAnimationFrame(drawVideoFrame_);
-};
-
-function stop() {
-  cancelAnimationFrame(rafId);
-  endTime = Date.now();
-
-  console.log('frames captured: ' + frames.length + ' => ' +
-              ((endTime - startTime) / 1000) + 's video');
-
-  stream.stop;
-  embedVideoPreview();
-};
-
-function embedVideoPreview(opt_url) {
-  var url = opt_url || null;
-  var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
-  url = window.URL.createObjectURL(webmBlob);
-
-  video.src = url;
-
-  console.log(url);
-}
-
-
-function closeVideo(){
-  stop();
-  $('video').hide();
-}
-
-// turnOnCamera();
-
-exports.$ = $;
-
-})(window);
+//
+//   rafId = requestAnimationFrame(drawVideoFrame_);
+// };
+//
+// function stop() {
+//   cancelAnimationFrame(rafId);
+//   endTime = Date.now();
+//
+//   console.log('frames captured: ' + frames.length + ' => ' +
+//               ((endTime - startTime) / 1000) + 's video');
+//
+//   stream.stop;
+//   embedVideoPreview();
+// };
+//
+// function embedVideoPreview(opt_url) {
+//   var url = opt_url || null;
+//   var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
+//   url = window.URL.createObjectURL(webmBlob);
+//
+//   video.src = url;
+//
+//   console.log(url);
+// }
+//
+//
+// function closeVideo(){
+//   stop();
+//   $('video').hide();
+// }
+//
+// // turnOnCamera();
+//
+// exports.$ = $;
+//
+// })(window);
