@@ -23,6 +23,12 @@ var startTime = null;
 var endTime = null;
 var frames = [];
 
+var videoSelect = document.querySelector('select#videoSource');
+
+videoSelect.onchange = turnOnCamera;
+
+navigator.mediaDevices.enumerateDevices().then(gotDevices).then(turnOnCamera).catch(handleError);
+
 function turnOnCamera() {
   video.controls = false;
 
@@ -46,14 +52,31 @@ function turnOnCamera() {
   navigator.getUserMedia({video: true, audio: false}, function(stream) {
     video.src = window.URL.createObjectURL(stream);
     finishVideoSetup_();
-    stream.stop;
   }, function(e) {
     alert('Fine, you get a movie instead of your beautiful face ;)');
     video.src = 'Chrome_ImF.mp4';
     finishVideoSetup_();
-    stream.stop();
   });
 };
+
+function gotDevices(deviceInfos) {
+  for (var i = 0; i !== deviceInfos.length; ++i) {
+    var deviceInfo = deviceInfos[i];
+    // var option = document.createElement('option');
+    // option.value = deviceInfo.deviceId;
+    /*if (deviceInfo.kind === 'audioinput') {
+      option.text = deviceInfo.label ||
+        'microphone ' + (audioSelect.length + 1);
+      audioSelect.appendChild(option);
+    } else*/ if (deviceInfo.kind === 'videoinput') {
+      option.text = deviceInfo.label || 'camera ' +
+        (videoSelect.length + 1);
+      videoSelect.appendChild(option);
+    } else {
+      console.log('Found one other kind of source/device: ', deviceInfo);
+    }
+  }
+}
 
 function record() {
   var ctx = canvas.getContext('2d');
@@ -67,18 +90,6 @@ function record() {
     rafId = requestAnimationFrame(drawVideoFrame_);
 
     ctx.drawImage(video, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-    // Read back canvas as webp.
-    //console.time('canvas.dataURL() took');
-    // var url = canvas.toDataURL('image/jpeg', 1); // image/jpeg is way faster :(
-    //console.timeEnd('canvas.dataURL() took');
-    // frames.push(url);
-
-    // UInt8ClampedArray (for Worker).
-    //frames.push(ctx.getImageData(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT).data);
-
-    // ImageData
-    //frames.push(ctx.getImageData(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT));
 
     var base64dataUrl = canvas.toDataURL('image/jpeg');
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -112,26 +123,16 @@ function stop() {
   console.log('frames captured: ' + frames.length + ' => ' +
               ((endTime - startTime) / 1000) + 's video');
 
+  stream.stop;
   embedVideoPreview();
 };
 
 function embedVideoPreview(opt_url) {
   var url = opt_url || null;
-
-  // https://github.com/antimatter15/whammy
-  // var encoder = new Whammy.Video(1000/60);
-  // frames.forEach(function(dataURL, i) {
-  //   encoder.add(dataURL);
-  // });
-  // var webmBlob = encoder.compile();
-
-  // if (!url) {
-    var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
-    url = window.URL.createObjectURL(webmBlob);
-  // }
+  var webmBlob = Whammy.fromImageArray(frames, 1000 / 60);
+  url = window.URL.createObjectURL(webmBlob);
 
   video.src = url;
-  // downloadLink.href = url;
 
   console.log(url);
 }
@@ -142,7 +143,7 @@ function closeVideo(){
   $('video').hide();
 }
 
-turnOnCamera();
+// turnOnCamera();
 
 exports.$ = $;
 
