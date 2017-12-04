@@ -46,7 +46,7 @@ function turnOnCamera() {
   navigator.getUserMedia({video: true, audio: true}, function(stream) {
     video.src = window.URL.createObjectURL(stream);
     finishVideoSetup_();
-    stream.stop();
+    stream.stop;
   }, function(e) {
     alert('Fine, you get a movie instead of your beautiful face ;)');
     video.src = 'Chrome_ImF.mp4';
