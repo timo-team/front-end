@@ -43,7 +43,7 @@ function turnOnCamera() {
     }, 1000);
   };
 
-  navigator.getUserMedia({video: true, audio: true}, function(stream) {
+  navigator.getUserMedia({video: true, audio: false}, function(stream) {
     video.src = window.URL.createObjectURL(stream);
     finishVideoSetup_();
     stream.stop;
