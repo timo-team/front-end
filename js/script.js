@@ -21,11 +21,10 @@ from : https://simpl.info/getusermedia/sources/
 var videoElement = document.querySelector('video');
 // var audioSelect = document.querySelector('select#audioSource');
 var videoSelect = document.querySelector('select#videoSource');
-var startTime = null;
-var endTime = null;
-var frames = [];
-var rafId = null;
 var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+var localMediaStream = null;
+var myInterval = null;
 
 navigator.mediaDevices.enumerateDevices()
   .then(gotDevices).then(getStream).catch(handleError);
@@ -38,13 +37,128 @@ function gotDevices(deviceInfos) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
-    if (deviceInfo.kind === 'videoinput') {
+    /*if (deviceInfo.kind === 'audioinput') {
+      option.text = deviceInfo.label ||
+        'microphone ' + (audioSelect.length + 1);
+      audioSelect.appendChild(option);
+    } else */if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || 'camera ' +
         (videoSelect.length + 1);
       videoSelect.appendChild(option);
     } else {
       console.log('Found one other kind of source/device: ', deviceInfo);
     }
+  }
+}
+
+function getStream() {
+  if (window.stream) {
+    window.stream.getTracks().forEach(function(track) {
+      track.stop();
+    });
+  }
+
+  var constraints = {
+    audio: /*{
+      deviceId: {exact: audioSelect.value}
+    }*/ false,
+    video: {
+      width : $('section').width(),//320;//video.clientWidth;
+      height : ($('section').width()*9)/16,
+      deviceId: {exact: videoSelect.value}
+    }
+  };
+
+  navigator.mediaDevices
+  .getUserMedia(constraints)
+  .then(gotStream)
+  .catch(handleError);
+
+}
+
+function gotStream(stream) {
+  window.stream = stream; // make stream available to console
+  videoElement.srcObject = stream;
+  // videoElement.src = window.URL.createObjectURL(window.stream);
+  localMediaStream = window.stream;
+  myInterval = setInterval(function(){
+    record();
+  }, 3000);
+}
+
+function handleError(error) {
+  console.log('Error: ', error);
+}
+
+function closeVideo(){
+  let stream = videoElement.srcObject;
+  let tracks = stream.getTracks();
+  tracks.forEach(function(track) {
+    track.stop();
+  });
+  stream.stop;
+
+  videoElement.srcObject = null;
+  clearInterval(myInterval);
+  $('video').hide();
+}
+
+function record() {
+  console.log('reccord');
+  canvas.width = videoElement.videoWidth;
+  canvas.height = videoElement.videoHeight;
+  canvas.getContext('2d').
+    drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    var base64 = canvas.toDataURL("image/jpeg"); // PNG is the default
+    console.log(base64);
+    var apiUrl = '';
+
+    // $.ajax({
+    //   url: apiUrl,
+    //   dataType: 'json',
+    //   data: base64dataUrl,
+    //   type: 'POST',
+    //   success: function(data) {
+    //     console.log(data);
+    //     }
+    //   });
+    // });
+
+
+  // rafId = requestAnimationFrame(drawVideoFrame_);
+}
+
+/*var videoElement = document.querySelector('video');
+// var audioSelect = document.querySelector('select#audioSource');
+var videoSelect = document.querySelector('select#videoSource');
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+var localMediaStream = null;
+
+navigator.mediaDevices.enumerateDevices()
+  .then(gotDevices).then(getStream).catch(handleError);
+
+// audioSelect.onchange = getStream;
+videoSelect.onchange = getStream;
+
+function gotDevices(deviceInfos) {
+  if(deviceInfos > 1){
+    for (var i = 0; i !== deviceInfos.length; ++i) {
+      var deviceInfo = deviceInfos[i];
+      var option = document.createElement('option');
+      option.value = deviceInfo.deviceId;
+      if (deviceInfo.kind === 'videoinput') {
+        option.text = deviceInfo.label || 'camera ' +
+          (videoSelect.length + 1);
+        videoSelect.appendChild(option);
+      } else {
+        console.log('Found one other kind of source/device: ', deviceInfo);
+      }
+    }
+  } else {
+    $(videoSelect).hide();
+    console.log(deviceInfos[0]);
+    videoSelect.value = deviceInfos[0].deviceId;
   }
 }
 
@@ -74,36 +188,30 @@ function gotStream(stream) {
   video.height = ($('section').width()*9)/16;//240;// video.clientHeight;
   // Canvas is 1/2 for performance. Otherwise, getImageData() readback is
   // awful 100ms+ as 640x480.
-  canvas.width = video.width;
-  canvas.height = video.height;
-
-        record();
+  record();
 }
 
 function handleError(error) {
   console.log('Error: ', error);
 }
 
+
+
+function closeVideo(){
+    window.stream.getTracks().forEach(function(track) {
+      track.stop();
+    });
+    $('video').hide();
+    // window.location.href = "./thankyou.html";
+}
+
 function record() {
-  var ctx = canvas.getContext('2d');
-  var CANVAS_HEIGHT = canvas.height;
-  var CANVAS_WIDTH = canvas.width;
-
-  frames = []; // clear existing frames;
-  startTime = Date.now();
-
-  function drawVideoFrame_(time) {
-    rafId = requestAnimationFrame(drawVideoFrame_);
-
-    ctx.drawImage(video, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-    var base64dataUrl = canvas.toDataURL('image/jpeg');
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-    // var img = new Image();
-    // img.src = base64dataUrl;
-
-    console.log(base64dataUrl);
+  if (localMediaStream) {
+      ctx.drawImage(video, 0, 0);
+      // "image/webp" works in Chrome.
+      // Other browsers will fall back to image/png.
+      console.log(canvas.toDataURL('image/webp'));
+    }
 
     var apiUrl = '';
 
@@ -117,7 +225,8 @@ function record() {
     //     }
     //   });
     // });
-  };
 
-  rafId = requestAnimationFrame(drawVideoFrame_);
+
+  // rafId = requestAnimationFrame(drawVideoFrame_);
 }
+*/
