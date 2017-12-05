@@ -73,7 +73,7 @@ function getStream() {
   .getUserMedia(constraints)
   .then(gotStream)
   .catch(handleError);
-
+  ctx.scale(-1,1); //flip the image horizontally
 }
 
 function gotStream(stream) {
@@ -104,13 +104,12 @@ function closeVideo(){
 }
 
 function record() {
-  console.log('reccord');
+  // console.log('reccord');
   canvas.width = videoElement.videoWidth;
   canvas.height = videoElement.videoHeight;
-  canvas.getContext('2d').
-    drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
     var base64 = canvas.toDataURL("image/jpeg"); // PNG is the default
-    console.log(base64);
+    // console.log(base64);
     var apiUrl = '';
 
     // $.ajax({
