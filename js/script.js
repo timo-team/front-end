@@ -21,11 +21,16 @@ from : https://simpl.info/getusermedia/sources/
 var videoElement = document.querySelector('video');
 // var audioSelect = document.querySelector('select#audioSource');
 var videoSelect = document.querySelector('select#videoSource');
+var startTime = null;
+var endTime = null;
+var frames = [];
+var rafId = null;
+var canvas = document.querySelector('canvas');
 
 navigator.mediaDevices.enumerateDevices()
   .then(gotDevices).then(getStream).catch(handleError);
 
-audioSelect.onchange = getStream;
+// audioSelect.onchange = getStream;
 videoSelect.onchange = getStream;
 
 function gotDevices(deviceInfos) {
@@ -51,9 +56,7 @@ function getStream() {
   }
 
   var constraints = {
-    audio: {
-      deviceId: {exact: audioSelect.value}
-    },
+    audio: false,
     video: {
       deviceId: {exact: videoSelect.value}
     }
@@ -97,10 +100,10 @@ function record() {
     var base64dataUrl = canvas.toDataURL('image/jpeg');
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-    var img = new Image();
-    img.src = base64dataUrl;
+    // var img = new Image();
+    // img.src = base64dataUrl;
 
-    console.log(img.src);
+    console.log(base64dataUrl);
 
     var apiUrl = '';
 
