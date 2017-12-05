@@ -24,7 +24,7 @@ header {
     font-weight: 200;
 }
 
-header img {    
+header img {
     width: 60px;
     margin-right: 20px
 }
@@ -79,6 +79,11 @@ select{
     height: 40px;
 }
 
+.select{
+  margin: 15px 25%;
+  text-align: center;
+}
+
 /*Media queries*/
 
 @media (min-width: 1200px){
@@ -96,14 +101,14 @@ select{
 }
 
 /*tablet portrait*/
-@media all and (max-width: 768px) { 
-    
+@media all and (max-width: 768px) {
+
 
 
 }
 
 /*mobile portrait*/
-@media all and (max-width: 732px) {    
+@media all and (max-width: 732px) {
 
     .info-meeting {
     padding: 20px 0;
@@ -114,7 +119,7 @@ select{
 }
 
 /*mobile*/
-@media all and (max-width: 480px) { 
+@media all and (max-width: 480px) {
 
     .info-meeting {
     padding: 20px 0;
@@ -125,7 +130,3 @@ select{
 
 
 }
-
-
-
-
