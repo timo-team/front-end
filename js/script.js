@@ -65,15 +65,14 @@ function getStream() {
     video: {
       width : $('section').width(),//320;//video.clientWidth;
       height : ($('section').width()*9)/16,
-      deviceId: {exact: videoSelect.value}
+      deviceId: {exact: videoSelect.value},
+      options: {mirror:true}
     }
   };
-
   navigator.mediaDevices
   .getUserMedia(constraints)
   .then(gotStream)
   .catch(handleError);
-  ctx.scale(-1,1); //flip the image horizontally
 }
 
 function gotStream(stream) {
@@ -107,10 +106,10 @@ function record() {
   // console.log('reccord');
   canvas.width = videoElement.videoWidth;
   canvas.height = videoElement.videoHeight;
-    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-    var base64 = canvas.toDataURL("image/jpeg"); // PNG is the default
-    // console.log(base64);
-    var apiUrl = '';
+  ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+  var base64 = canvas.toDataURL("image/jpeg"); // PNG is the default
+  // console.log(base64);
+  var apiUrl = '';
 
     // $.ajax({
     //   url: apiUrl,
