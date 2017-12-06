@@ -80,9 +80,10 @@ function gotStream(stream) {
   videoElement.srcObject = stream;
   // videoElement.src = window.URL.createObjectURL(window.stream);
   localMediaStream = window.stream;
+
   myInterval = setInterval(function(){
     record();
-  }, 3000);
+  }, 100);
 }
 
 function handleError(error) {
@@ -107,23 +108,71 @@ function record() {
   canvas.width = videoElement.videoWidth;
   canvas.height = videoElement.videoHeight;
   ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-  var base64 = canvas.toDataURL("image/jpeg"); // PNG is the default
+  var base64 = canvas.toDataURL(); // PNG is the default
   // console.log(base64);
-  var apiUrl = '';
 
-    // $.ajax({
-    //   url: apiUrl,
-    //   dataType: 'json',
-    //   data: base64dataUrl,
-    //   type: 'POST',
-    //   success: function(data) {
-    //     console.log(data);
-    //     }
-    //   });
-    // });
+  var params = {
+      // Request parameters
+      "outputStyle": "aggregate",
+  };
 
+  $.ajax({
+      url: "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize?" + $.param(params),
+      beforeSend: function(xhrObj){
+          // Request headers
+          xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","740579c771b94498877f87d1855831df");
+      },
+      type: "POST",
+      processData: false,
+      contentType: 'application/octet-stream',
+      // Request body
+      data: makeblob(base64),
+  })
+  .done(function(data) {
+      // console.log(data[0].scores);
+      var emotion = null;
+      var highestScore = 0;
 
-  // rafId = requestAnimationFrame(drawVideoFrame_);
+      if(data[0].scores !== undefined){
+        console.log(data[0].scores);
+        $.each(data, function(key, val){
+          $.each(data[key].scores, function(key, value){
+            if(highestScore < value){
+              highestScore = value;
+              emotion = key;
+            }
+          });
+          var i = key+1;
+          $('.detected-emotion').find('p').text("person "+ i +" seems "+emotion);
+        });
+      }
+
+  })
+  .fail(function(error) {
+      console.log(error);
+  });
+}
+
+function makeblob (dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var parts = dataURL.split(',');
+        var contentType = parts[0].split(':')[1];
+        var raw = decodeURIComponent(parts[1]);
+        return new Blob([raw], { type: contentType });
+    }
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], { type: contentType });
 }
 
 /*var videoElement = document.querySelector('video');
