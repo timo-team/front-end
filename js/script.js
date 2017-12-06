@@ -135,7 +135,7 @@ function record() {
       var emotion = null;
       var highestScore = 0;
       var text = "";
-      if(data[0].scores !== undefined){
+      if(data[0] !== undefined){
         console.log(data);
         $.each(data, function(key, val){
           $.each(data[key].scores, function(key, value){
