@@ -72,6 +72,7 @@ function getStream() {
   navigator.mediaDevices
   .getUserMedia(constraints)
   .then(gotStream)
+  .then(record)
   .catch(handleError);
 }
 
@@ -81,9 +82,9 @@ function gotStream(stream) {
   // videoElement.src = window.URL.createObjectURL(window.stream);
   localMediaStream = window.stream;
 
-  myInterval = setInterval(function(){
-    record();
-  }, 100);
+  // myInterval = setInterval(function(){
+  //   ();
+  // }, 100);
 }
 
 function handleError(error) {
@@ -108,7 +109,7 @@ function record() {
   canvas.width = videoElement.videoWidth;
   canvas.height = videoElement.videoHeight;
   ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-  var base64 = canvas.toDataURL(); // PNG is the default
+  var base64 = canvas.toDataURL('image/jpeg', 0.5); // PNG is the default
   // console.log(base64);
 
   var params = {
@@ -127,6 +128,7 @@ function record() {
       contentType: 'application/octet-stream',
       // Request body
       data: makeblob(base64),
+      timeout: 10000
   })
   .done(function(data) {
       // console.log(data[0].scores);
@@ -148,10 +150,12 @@ function record() {
         });
         $('.detected-emotion').find('p').text(text);
       }
-
   })
   .fail(function(error) {
       console.log(error);
+  })
+  .always(function(){
+      setTimeout(record(), 500);
   });
 }
 
