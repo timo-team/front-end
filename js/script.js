@@ -132,9 +132,9 @@ function record() {
       // console.log(data[0].scores);
       var emotion = null;
       var highestScore = 0;
-
+      var text = "";
       if(data[0].scores !== undefined){
-        console.log(data[0].scores);
+        console.log(data);
         $.each(data, function(key, val){
           $.each(data[key].scores, function(key, value){
             if(highestScore < value){
@@ -143,8 +143,10 @@ function record() {
             }
           });
           var i = key+1;
-          $('.detected-emotion').find('p').text("person "+ i +" seems "+emotion);
+          text = text + " person "+ i +" seems "+emotion;
+
         });
+        $('.detected-emotion').find('p').text(text);
       }
 
   })
