@@ -85,7 +85,33 @@ select{
 }
 
 video{
-  transform: rotateY(180deg);
+  /*display: block;
+  position: absolute;*/
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition-property: opacity;
+  -webkit-transition-duration: 2s;
+  opacity: 0;
+  z-index: -1;
+}
+#rectCanvas, #rectTextCanvas {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 8000;
+}
+
+#rectTextCanvas{
+  z-index: 9000;
 }
 
 /*Media queries*/

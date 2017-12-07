@@ -19,9 +19,8 @@ from : https://simpl.info/getusermedia/sources/
 'use strict';
 
 var videoElement = document.querySelector('video');
-// var audioSelect = document.querySelector('select#audioSource');
 var videoSelect = document.querySelector('select#videoSource');
-var canvas = document.querySelector('canvas');
+var canvas = document.querySelector('canvas#videoCanvas');
 var ctx = canvas.getContext('2d');
 var localMediaStream = null;
 var myInterval = null;
@@ -29,7 +28,6 @@ var myInterval = null;
 navigator.mediaDevices.enumerateDevices()
   .then(gotDevices).then(getStream).catch(handleError);
 
-// audioSelect.onchange = getStream;
 videoSelect.onchange = getStream;
 
 function gotDevices(deviceInfos) {
@@ -37,11 +35,7 @@ function gotDevices(deviceInfos) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
-    /*if (deviceInfo.kind === 'audioinput') {
-      option.text = deviceInfo.label ||
-        'microphone ' + (audioSelect.length + 1);
-      audioSelect.appendChild(option);
-    } else */if (deviceInfo.kind === 'videoinput') {
+    if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || 'camera ' +
         (videoSelect.length + 1);
       videoSelect.appendChild(option);
@@ -78,13 +72,10 @@ function getStream() {
 
 function gotStream(stream) {
   window.stream = stream; // make stream available to console
+  videoElement.style.opacity = 1;
   videoElement.srcObject = stream;
-  // videoElement.src = window.URL.createObjectURL(window.stream);
   localMediaStream = window.stream;
 
-  // myInterval = setInterval(function(){
-  //   ();
-  // }, 100);
 }
 
 function handleError(error) {
@@ -136,7 +127,6 @@ function record() {
       var highestScore = 0;
       var text = "";
       if(data[0] !== undefined){
-        console.log(data);
         $.each(data, function(key, val){
           $.each(data[key].scores, function(key, value){
             if(highestScore < value){
@@ -146,8 +136,11 @@ function record() {
           });
           var i = key+1;
           text = text + " person "+ i +" seems "+emotion;
-
         });
+        if(data[0].faceRectangle !== undefined){
+          // console.log('on call', data[key].faceRectangle);
+          faceTrack(data, emotion);
+        }
         $('.detected-emotion').find('p').text(text);
       }
   })
@@ -181,105 +174,50 @@ function makeblob (dataURL) {
     return new Blob([uInt8Array], { type: contentType });
 }
 
-/*var videoElement = document.querySelector('video');
-// var audioSelect = document.querySelector('select#audioSource');
-var videoSelect = document.querySelector('select#videoSource');
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
-var localMediaStream = null;
 
-navigator.mediaDevices.enumerateDevices()
-  .then(gotDevices).then(getStream).catch(handleError);
+function faceTrack(datas, emotion) {
+  if(datas !== undefined){
+    var c = document.getElementById("rectCanvas");
+    var cText = document.getElementById("rectTextCanvas");
+    c.width = cText.width = videoElement.videoWidth;
+    c.height = cText.height = videoElement.videoHeight;
+    var ctx2 = c.getContext("2d");
+    var ctx3 = cText.getContext("2d");
 
-// audioSelect.onchange = getStream;
-videoSelect.onchange = getStream;
-
-function gotDevices(deviceInfos) {
-  if(deviceInfos > 1){
-    for (var i = 0; i !== deviceInfos.length; ++i) {
-      var deviceInfo = deviceInfos[i];
-      var option = document.createElement('option');
-      option.value = deviceInfo.deviceId;
-      if (deviceInfo.kind === 'videoinput') {
-        option.text = deviceInfo.label || 'camera ' +
-          (videoSelect.length + 1);
-        videoSelect.appendChild(option);
-      } else {
-        console.log('Found one other kind of source/device: ', deviceInfo);
-      }
+    var x_offset = 0, y_offset = 0, x_scale = 1, y_scale = 1;
+    if (videoElement.clientWidth * videoElement.videoHeight > videoElement.videoWidth * videoElement.clientHeight) {
+      x_offset = (videoElement.clientWidth - videoElement.clientHeight *
+                  videoElement.videoWidth / videoElement.videoHeight) / 2;
+    } else {
+      y_offset = (videoElement.clientHeight - videoElement.clientWidth *
+                  videoElement.videoHeight / videoElement.videoWidth) / 2;
     }
-  } else {
-    $(videoSelect).hide();
-    console.log(deviceInfos[0]);
-    videoSelect.value = deviceInfos[0].deviceId;
+    x_scale = (videoElement.clientWidth - x_offset * 2) / videoElement.videoWidth;
+    y_scale = (videoElement.clientHeight - y_offset * 2) / videoElement.videoHeight;
+// console.log(x_scale, y_scale);
+    for (var i = 0; i < datas.length; i++) {
+      // console.log(datas[i].faceRectangle);
+      var x = (datas[i].faceRectangle.left * x_scale + x_scale) - 25;
+      var y = (datas[i].faceRectangle.top * y_scale + y_offset)  + 15;
+      var width = datas[i].faceRectangle.width * x_scale;
+      var height = (datas[i].faceRectangle.height * y_scale) / 1.5;
+// console.log(x, y, width, height);
+
+
+      ctx3.font = "10pt Calibri,Geneva,Arial";
+      // ctx3.strokeStyle = "rgb(0,0,0)";
+      ctx3.fillStyle = "rgb(255,255,255)";
+      // ctx3.strokeText(emotion, x, y-5);
+      ctx3.fillText(emotion, x+2, y-5);
+
+      ctx2.beginPath();
+      ctx2.lineWidth="1";
+      ctx2.strokeStyle="rgb(255,0,0)";
+      ctx2.fillStyle="rgb(255,0,0)";
+      ctx2.strokeRect(x, y, width, height);
+      ctx2.fillRect(x, y-15, 80, 15);
+      ctx2.stroke();
+
+    }
   }
 }
-
-function getStream() {
-  if (window.stream) {
-    window.stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
-  }
-
-  var constraints = {
-    audio: false,
-    video: {
-      deviceId: {exact: videoSelect.value}
-    }
-  };
-
-  navigator.mediaDevices.getUserMedia(constraints).
-    then(gotStream).catch(handleError);
-}
-
-function gotStream(stream) {
-  window.stream = stream; // make stream available to console
-  videoElement.srcObject = stream;
-
-  video.width = $('section').width();//320;//video.clientWidth;
-  video.height = ($('section').width()*9)/16;//240;// video.clientHeight;
-  // Canvas is 1/2 for performance. Otherwise, getImageData() readback is
-  // awful 100ms+ as 640x480.
-  record();
-}
-
-function handleError(error) {
-  console.log('Error: ', error);
-}
-
-
-
-function closeVideo(){
-    window.stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
-    $('video').hide();
-    // window.location.href = "./thankyou.html";
-}
-
-function record() {
-  if (localMediaStream) {
-      ctx.drawImage(video, 0, 0);
-      // "image/webp" works in Chrome.
-      // Other browsers will fall back to image/png.
-      console.log(canvas.toDataURL('image/webp'));
-    }
-
-    var apiUrl = '';
-
-    // $.ajax({
-    //   url: apiUrl,
-    //   dataType: 'json',
-    //   data: base64dataUrl,
-    //   type: 'POST',
-    //   success: function(data) {
-    //     console.log(data);
-    //     }
-    //   });
-    // });
-
-
-  // rafId = requestAnimationFrame(drawVideoFrame_);
-}
-*/
