@@ -139,7 +139,7 @@ function record() {
         });
         if(data[0].faceRectangle !== undefined){
           // console.log('on call', data[key].faceRectangle);
-          faceTrack(data, emotion);
+          faceTrack(data, emotion, highestScore);
         }
         $('.detected-emotion').find('p').text(text);
       }
@@ -175,12 +175,14 @@ function makeblob (dataURL) {
 }
 
 
-function faceTrack(datas, emotion) {
+function faceTrack(datas, emotion, rate) {
   if(datas !== undefined){
     var c = document.getElementById("rectCanvas");
     var cText = document.getElementById("rectTextCanvas");
-    c.width = cText.width = videoElement.videoWidth;
-    c.height = cText.height = videoElement.videoHeight;
+    c.width = cText.width = videoElement.clientWidth;
+    c.height = cText.height = videoElement.clientHeight;
+    c.style.top = cText.style.top = videoElement.offsetTop;
+    c.style.left = cText.style.left = videoElement.offsetLeft
     var ctx2 = c.getContext("2d");
     var ctx3 = cText.getContext("2d");
 
@@ -197,23 +199,32 @@ function faceTrack(datas, emotion) {
 // console.log(x_scale, y_scale);
     for (var i = 0; i < datas.length; i++) {
       // console.log(datas[i].faceRectangle);
-      var x = (datas[i].faceRectangle.left * x_scale + x_scale) - 25;
-      var y = (datas[i].faceRectangle.top * y_scale + y_offset)  + 15;
+      var x = (datas[i].faceRectangle.left * x_scale + x_scale);
+      var y = (datas[i].faceRectangle.top * y_scale + y_offset);
       var width = datas[i].faceRectangle.width * x_scale;
-      var height = (datas[i].faceRectangle.height * y_scale) / 1.5;
+      var height = (datas[i].faceRectangle.height * y_scale);
 // console.log(x, y, width, height);
 
 
       ctx3.font = "10pt Calibri,Geneva,Arial";
       // ctx3.strokeStyle = "rgb(0,0,0)";
-      ctx3.fillStyle = "rgb(255,255,255)";
+      ctx3.fillStyle = "rgb(0,0,0)";
       // ctx3.strokeText(emotion, x, y-5);
       ctx3.fillText(emotion, x+2, y-5);
 
       ctx2.beginPath();
       ctx2.lineWidth="1";
-      ctx2.strokeStyle="rgb(255,0,0)";
-      ctx2.fillStyle="rgb(255,0,0)";
+      if(rate < 0.33){
+        ctx2.strokeStyle="rgb(255,0,0)";
+        ctx2.fillStyle="rgb(255,0,0)";
+      }else if(rate > 0.33 && rate < 0.66){
+        ctx2.strokeStyle="rgb(255,255,0)";
+        ctx2.fillStyle="rgb(255,255,0)";
+      }else if(rate > 0.66){
+        ctx2.strokeStyle="rgb(0,255,0)";
+        ctx2.fillStyle="rgb(0,255,0)";
+      }
+
       ctx2.strokeRect(x, y, width, height);
       ctx2.fillRect(x, y-15, 80, 15);
       ctx2.stroke();
