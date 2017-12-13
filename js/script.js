@@ -24,6 +24,8 @@ var canvas = document.querySelector('canvas#videoCanvas');
 var ctx = canvas.getContext('2d');
 var localMediaStream = null;
 var myInterval = null;
+var prevEmotion = 'neutral';
+var currEmotion = 'neutral';
 
 navigator.mediaDevices.enumerateDevices()
   .then(gotDevices).then(getStream).catch(handleError);
@@ -102,7 +104,6 @@ function record() {
   ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
   var base64 = canvas.toDataURL('image/jpeg', 0.5); // PNG is the default
   // console.log(base64);
-
   var params = {
       // Request parameters
       "outputStyle": "aggregate",
@@ -123,7 +124,6 @@ function record() {
   })
   .done(function(data) {
       // console.log(data[0].scores);
-      var emotion = null;
       var highestScore = 0;
       var text = "";
       if(data[0] !== undefined){
@@ -131,16 +131,24 @@ function record() {
           $.each(data[key].scores, function(key, value){
             if(highestScore < value){
               highestScore = value;
-              emotion = key;
+              currEmotion = key;
             }
           });
           var i = key+1;
-          text = text + " person "+ i +" seems "+emotion;
+          if(data[0].faceRectangle !== undefined){
+            // console.log('on call', data[key].faceRectangle);
+            if(prevEmotion !== currEmotion){
+              console.log(prevEmotion, currEmotion);
+              prevEmotion = currEmotion;
+              text = text + "L'interlocuteur "+ i +" a l'air "+ getFrenchEmotion(currEmotion);
+              faceTrack(data, getFrenchEmotion(currEmotion), highestScore);
+              speechEmotion(text);
+            }
+
+          }
         });
-        if(data[0].faceRectangle !== undefined){
-          // console.log('on call', data[key].faceRectangle);
-          faceTrack(data, emotion, highestScore);
-        }
+
+
         $('.detected-emotion').find('p').text(text);
       }
   })
@@ -150,6 +158,53 @@ function record() {
   .always(function(){
       setTimeout(record(), 500);
   });
+}
+
+function getFrenchEmotion(enEmotion){
+  switch(enEmotion){
+    case 'happiness' :
+      return'joyeux';
+      break;
+    case 'anger' :
+      return 'en colère';
+      break;
+    case 'sadness' :
+      return 'triste';
+      break;
+    case 'comptempt' :
+      return 'méprisant';
+      break;
+    case 'disgust' :
+      return 'dégouté';
+      break;
+    case 'surprise' :
+      return 'surpris';
+      break;
+    case 'fear' :
+      return 'appeuré';
+      break;
+    case 'neutral' :
+      return 'neutre';
+      break;
+  }
+}
+
+function speechEmotion(text){
+  var msg = new SpeechSynthesisUtterance();
+  // var voices = window.speechSynthesis.getVoices();
+  // msg.voice = voices[10]; // Note: some voices don't support altering params
+  // msg.voiceURI = 'native';
+  // msg.volume = 1; // 0 to 1
+  // msg.rate = 1; // 0.1 to 10
+  // msg.pitch = 2; //0 to 2
+  msg.text = text;
+  msg.lang = 'fr-FR';
+
+  msg.onend = function(e) {
+    console.log('Finished in ' + event.elapsedTime + ' seconds.');
+  };
+
+  speechSynthesis.speak(msg);
 }
 
 function makeblob (dataURL) {
