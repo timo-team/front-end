@@ -74,17 +74,31 @@ b {color: #278ae8;}
     text-align: center;
 }
 
-select{
+select {
     line-height: inherit;
-    border: solid 1px #7E7E7E;
-    padding: 10px;
-    height: 40px;
+    border: solid 1px #cecece;
+    height: 30px;
 }
 
-.select{
-  margin: 15px 25%;
-  text-align: center;
+.select {
+  padding-bottom: 20px;
 }
+
+.stop {
+  background: transparent;
+  border:none;
+}
+
+i.fa {
+  color: #9c51a0;
+  padding: 10px 0;
+  display: inline-flex;
+}
+
+.fa-star {
+ color: #F79E31;
+}
+
 
 video{
   /*display: block;
@@ -174,6 +188,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
   border-bottom: 1px solid #cecece;
 }
 
+.contacts > ul > li a {
+  color:#333333;
+  text-decoration: none;
+}
 
 .contacts > ul > li:last-child {
   border-bottom: 0;
