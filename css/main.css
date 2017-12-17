@@ -126,6 +126,10 @@ video{
 
 .detected-emotion {display: none;}
 
+header.gradient-color {
+  height: 180px;
+}
+
 .gradient {
   position: absolute;
   top: 0;
@@ -182,7 +186,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
   margin: 0;
 }
 
-.contacts > ul > li {
+.contacts > ul > li, 
+.description > ul > li,
+.relation > ul > li,
+.interlocuteur > ul > li {
   list-style-type: none;
   padding: 12px 0px;
   border-bottom: 1px solid #cecece;
@@ -195,6 +202,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 
 .contacts > ul > li:last-child {
   border-bottom: 0;
+}
+
+.picture-profile > img {
+    border-radius: 100%;
+    width: 100%;
+    margin-top: -160px;
+    border: 5px solid #FFFFFF;
 }
 
 
@@ -225,21 +239,57 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 @media all and (max-width: 732px) {
 
     .info-meeting {
-    padding: 20px 0;
-    border-top: #979797 solid 1px;
-    border-bottom: #979797 solid 1px;
-    margin: 30px 0;
+    padding: 0;
+    margin: 30px 0;}
+
+    .btn-primary {
+      bottom: 0;
+      position: fixed;
+      width: 100%;
+      margin: 0;
+      left: 0;
+    }
+
+    .hr {
+    border-top: #c3c3c3 solid 1px;
+    padding: 20px;
+  }
+
+  .picture-profile > img {
+    border-radius: 100%;
+    width: 100%;
+    margin-top: -120px;
+    border: 5px solid #FFFFFF;
+}
 
 }
 
 /*mobile*/
 @media all and (max-width: 480px) {
 
-    .info-meeting {
-    padding: 20px 0;
-    border-top: #979797 solid 1px;
-    border-bottom: #979797 solid 1px;
+  .info-meeting {
+    padding: 0;
     margin: 30px 0;
+}
+  
+  .hr {
+    border-top: #c3c3c3 solid 1px;
+    padding: 30px 0;
+  }
+
+.btn-primary {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    margin: 0;
+    left: 0;
+}
+
+.picture-profile > img {
+    border-radius: 100%;
+    width: 100%;
+    margin-top: -120px;
+    border: 5px solid #FFFFFF;
 }
 
 
