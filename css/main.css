@@ -170,7 +170,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 
 .contacts > ul > li {
   list-style-type: none;
+  padding: 12px 0px;
+  border-bottom: 1px solid #cecece;
 }
+
+
+.contacts > ul > li:last-child {
+  border-bottom: 0;
+}
+
 
 /*Media queries*/
 
