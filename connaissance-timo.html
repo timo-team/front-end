@@ -27,10 +27,46 @@
 
 <body>
 
-<header class="gradient-color">
-  <a href="index.html" style="color:white;text-decoration:none;">
-    <img src="img/logo.png" alt="Logo timo">Timo
-  </a>
+    <!-- Mobile menu -->
+    <div id="menuToggle">
+            <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+                
+                <ul id="menu">
+                    <div class="row">
+                        <!--<div class="col-lg-3 col-xs-12">
+                            <img src="images/logo.png" alt="AAES Accueil Administration Entreprise Services à Mougins &amp; Grasse" class="logo-menu">
+                        </div> -->
+
+                        <div class="col-xs-12 menu-top">
+                            <ul>
+                                <li><a href="">Présentation d'AAES</a></li>
+                                <li><a href="http://www.aaes06.fr/tarifs-aaes.pdf" target="blank">Tarifs</a></li>
+                                <li><a href="">Contact</a></li>
+                                <li><a href="partenaires.html">Partenaires</a></li>
+                            </ul>
+                        </div>
+                    </div><!--row-->
+                </ul>
+    </div><!-- /mobile menu-->
+
+
+<header class="gradient-color header-profile">
+  <div class="row">
+    <div class="col-lg-5">
+      <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
+    </div>
+
+    <div class="col-lg-7 menu">
+      <ul>
+        <li><a href="index.html">Tableau de bord</a></li>
+        <li><a href="#">Mon profil</a></li>
+        <li><a href="record.html">Démarrer Timo</a></li>
+      </ul>
+    </div>
+  </div>
 </header>
 
 <section class="container">
@@ -64,8 +100,8 @@
           <ul>
             <li>Votre Manager</li>
             <li>Département Comptable</li>
-            <li><a href="#">4 projets</a> en communs</li>
-            <li><a href="#">6 réunions</a> prévues ce mois-ci</li>
+            <li><a href="#" type="text/css">4 projets</a> en communs</li>
+            <li><a href="#" type="text/css">6 réunions</a> prévues ce mois-ci</li>
           </ul>  
         </div>
 
@@ -82,31 +118,6 @@
 
       </div>
   </div><!--infos meeting-->
-
-    <form action="record.html">
-      <div class="row">
-      
-      <!--  
-        <div class="col-lg-12 select-device">
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Selectionner mon appareil</label>
-        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-          <option selected>Mes lunettes connectées</option>
-          <option value="1">Mon ordinateur</option>
-          <option value="2">Mon téléphone </option>
-        </select>
-        </div> select device-->
-      </div>
-
-      <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8"><button type="submit" class="btn btn-primary">Démarrer Timo</button></div>
-        <div class="col-lg-2"></div>
-      </div>
-
-    </form>
-  </div>
-</div>
-
 
 </section>
 

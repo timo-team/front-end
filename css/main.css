@@ -126,7 +126,7 @@ video{
 
 .detected-emotion {display: none;}
 
-header.gradient-color {
+.header-profile {
   height: 180px;
 }
 
@@ -212,12 +212,232 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 }
 
 
+/* menu */
+
+.menu {
+    height: 45px;
+    float: right;
+    min-width: 555px;
+}
+
+.menu ul {
+    color: #FFFFFF;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.menu li:first-child {
+    background: none repeat scroll 0 0 transparent;
+    padding: 0;
+}
+
+.menu li {
+    border: 0 none;
+    display: inline;
+    margin: 0;
+    text-align: center;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    border: 0;
+    color: #FFFFFF;
+    padding: 0px 0px 0px 20px;
+    text-align: center;
+    transition: all 0.55s ease 0s;
+    font-size: 18px;
+}
+
+.menu ul li a:hover {
+    color: #D1F6FC;
+}
+
+
+/* Menu mobile */
+
+#menuToggle
+{
+  display: block;
+  position: relative;
+  top: 50px;
+  left: 20px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #ef8000;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #ef8000;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+/*
+ * Make this absolute positioned
+ * at the top left of the screen
+ */
+#menu
+{
+  position: absolute;
+  width: 300px;
+  margin: -160px 0 0 -50px;
+  padding: 50px;
+  padding-top: 170px;
+  
+  background: #eeeeee; 
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+{
+    padding: 10px 0;
+    font-size: 1.1rem;
+}
+
+
+#menuToggle input:checked ~ ul
+{
+  transform: none;
+}
+
+.menu-top {
+    width: 100%;
+    border-bottom: dashed 1px #ef8000;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.menu-top ul {
+    color: #333333;
+    list-style-type: none;
+    padding-left: 0;    
+}
+
+.menu-top li {
+    border: 0 none;
+    padding: 0 17px;
+    padding-top: 6px;
+}
+.menu-top a {
+    border: medium none;
+    color: #333333;
+    text-decoration: none;
+}
+
+
+.menu-bottom {
+    width: 100%;
+}
+
+.menu-bottom ul {
+    color: #333333;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.menu-bottom li {
+    border: 0 none;
+    padding: 0 17px;
+    padding-top: 6px;
+}
+.menu-bottom a {
+    border: medium none;
+    color: #333333;
+    text-decoration: none;
+}
+
+
 /*Media queries*/
 
 @media (min-width: 1200px){
     .container {
         width: 1140px;
         max-width: 100%;}
+
+  #menuToggle {display: none;}
 }
 
 
@@ -225,13 +445,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 /*tablet paysage*/
 
 @media all and (max-width: 1024px) {
-
+#menuToggle {display: none;}
 }
 
 /*tablet portrait*/
 @media all and (max-width: 768px) {
 
-
+#menuToggle {display: none;}
 
 }
 
@@ -262,6 +482,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
     border: 5px solid #FFFFFF;
 }
 
+.menu {display: none;}
+
 }
 
 /*mobile*/
@@ -291,6 +513,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
     margin-top: -120px;
     border: 5px solid #FFFFFF;
 }
+
+.menu {display: none;}
 
 
 }
