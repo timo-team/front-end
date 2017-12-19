@@ -12,9 +12,11 @@
 
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet">
     <link href="css/bootstrap-grid.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 
     <link href="css/main.css" rel="stylesheet">
+    <script defer src="js/fontawesome-all.js"></script>
 
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -26,31 +28,107 @@
 
 <body>
 
-<header><a href="index.html" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a></header>
+<header class="gradient-color">
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="index.html">Tableau de bord</a></li>
+        <li><a href="#">Mon profil</a></li>
+        <li><a href="record.html">Démarrer Timo</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+</header>
 
 <section class="container">
 <div class="row">
   <div class="col-lg-12">
-    <h2>A bientôt, Sandra</h2>
+    <h2>Merci d'avoir utilisé Timo, Sandra !</h2>
 
-    <div class="info-meeting">
-      Merci d'avoir participé à votre réunion “<b>Présentation de MyProject</b>” avec Timo.<br/>
-      La prochaine commencera dans <b>45</b> minutes avec Paul C, John T et Peter K <a href="#">(Modifier mon audience)</a>
-      <br/>Vous serez prévenue par notification 5 min avant le début.
+    <div class="row info-meeting">
+      <div class="col-lg-6 hr">
+        <h3>Prochaine réunion</h3>
+        <div class="tag">Commence dans 30 minutes</div>
+
+        <div class="card reunion">
+          <h4>Checkpoint projet A.</h4>
+          <div class="date">Aujourd'hui - 17h30 à 18h</div>
+          <div class="audience"><a href="connaissance-timo.html">Jason Roux</a></div>
+        </div>
+
+        <a href="#">Voir toutes mes réunions</a>
+
+      </div>
+      <div class="col-lg-6 hr">
+        <h3>Vos connaissances Timo</h3>
+        <div class="card contacts">
+          <ul>
+            <li>
+              <div class="row">
+                <div class="col-lg-11"><a href="connaissance-timo.html">Audrey Johns</a></div>
+                <div class="col-lg-1"><i class="fa fa-star"></i></div>
+              </div>
+            </li>  
+
+            <li>
+              <div class="row">
+                <div class="col-lg-11"><a href="">Jerôme Duplont</a></div>
+                <div class="col-lg-1"><i class="fa fa-star"></i></div>
+              </div>
+            </li> 
+
+            <li>
+              <div class="row">
+                <div class="col-lg-11"><a href="">Jason Roux</a></div>
+                <div class="col-lg-1"><i class="fa fa-star"></i></div>
+              </div>
+            </li>             
+          </ul>
+        </div>
+      </div>
+
     </div><!--infos meeting-->
+
+    <form action="record.html">
+      <div class="row">
+      
+      <!--  
+        <div class="col-lg-12 select-device">
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Selectionner mon appareil</label>
+        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+          <option selected>Mes lunettes connectées</option>
+          <option value="1">Mon ordinateur</option>
+          <option value="2">Mon téléphone </option>
+        </select>
+        </div> select device-->
+      </div>
+
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8"><button type="submit" class="btn btn-primary">Démarrer Timo</button></div>
+        <div class="col-lg-2"></div>
+      </div>
+
+    </form>
   </div>
 </div>
 
-<form action="index.html">
-  <div class="row">
-    <div class="col-lg-2"></div>
-    <div class="col-lg-8"><button type="submit" class="btn btn-primary">Home</button></div>
-    <div class="col-lg-2"></div>
-  </div>
 
-</form>
 </section>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>

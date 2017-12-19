@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 
     <link href="css/main.css" rel="stylesheet">
+    <script defer src="js/fontawesome-all.js"></script>
 
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,7 +28,7 @@
 
 <body>
 
-<header class="gradient-color">
+<header class="gradient-color header-profile">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -42,7 +43,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="index.html">Tableau de bord</a></li>
         <li><a href="#">Mon profil</a></li>
-        <li><a href="thankyou.html">Arrêter Timo</a></li>
+        <li><a href="record.html">Démarrer Timo</a></li>
       </ul>
     </div>
   </div>
@@ -52,36 +53,57 @@
 
 <section class="container">
 <div class="row">
-  <div class="col-lg-12">
-    <h2>Timo est allumé</h2>
-    <section>
-      <div class="select">
-        <label for="videoSource">Sélectionez votre caméra : </label><select id="videoSource"></select>
-      </div>
-      <div class="detected-emotion">
-        <p></p>
-      </div>
-      <canvas id="rectTextCanvas"></canvas>
-      <canvas id="rectCanvas"></canvas>
-      <video autoplay muted></video>
-      <canvas width="100%" height="auto" style="display:none;" id="videoCanvas"></canvas>
-    </section>
-    <form action="thankyou.html">
-      <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8"><button onclick="closeVideo()" type="submit" class="btn btn-primary">Arrêter Timo</button></div>
-        <div class="col-lg-2"></div>
-      </div>
-    </form>
-  </div>
-</div>
+  <div class="col-lg-4 col-3"></div>
+  <div class="col-lg-4 col-6">
+    <span class="picture-profile"><img src="img/picture-profile.jpg" alt="Photo de profil d'Audrey Johns"></span>
+  </div><!-- picture profile -->
+  <div class="col-lg-4 col-3"></div>
+</div><!--/row-->  
 
+    <h2>Audrey Johns</h2>
+
+  <div class="row info-meeting">
+      <div class="col-lg-6 col-12 hr">
+        <h3>Description physique</h3>
+        <div class="card description">
+          <ul>
+            <li>Femme, 30 ans</li>
+            <li>Cheveux blonds, yeux bleus</li>
+            <li>Taille moyenne</li>
+            <li>Signe particulier : n/a</li>
+          </ul>  
+        </div>
+
+      </div>
+
+      <div class="col-lg-6 col-12 hr">
+        <h3>Votre relation</h3>
+        <div class="card relation">
+          <ul>
+            <li>Votre Manager</li>
+            <li>Département Comptable</li>
+            <li><a href="#" type="text/css">4 projets</a> en communs</li>
+            <li><a href="#" type="text/css">6 réunions</a> prévues ce mois-ci</li>
+          </ul>  
+        </div>
+
+      </div>
+
+      <div class="col-lg-6 col-12 hr">
+        <h3>Interlocteur Timo</h3>
+        <div class="card interlocteur">
+          <ul>
+            <li>Audrey a approuvé ces informations.</li>
+            <li>Reconnaissance vocale activée: <b>Oui</b></li>
+          </ul>  
+        </div>
+
+      </div>
+  </div><!--infos meeting-->
 
 </section>
-<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="js/script.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
 </html>
