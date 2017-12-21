@@ -13,7 +13,7 @@ $(document).ready(function(){
       })
     .done(function(data){
       console.log(data);
-      if(data == 1){
+      if(data == 'Ok'){
         window.location = "dashboard.html"
       } else {
         $('.alert.alert-danger').show();
