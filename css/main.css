@@ -61,6 +61,12 @@ a:hover, a:focus {text-decoration: none; color: #278ae8;}
 
 b {color: #278ae8;}
 
+footer {
+    display: block;
+    text-align: center;
+    padding: 25px 0;
+}
+
 .btn-primary {
     background: #278ae8;
     color: #FFFFFF;
@@ -73,6 +79,17 @@ b {color: #278ae8;}
     margin: 20px auto;
 }
 
+.btn-secondary {
+    background: #FFFFFF;
+    color: #9c51a0;
+    border: 2px solid #9c51a0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+}
+
 .select-device {
     text-align: center;
 }
@@ -83,13 +100,27 @@ select {
     height: 30px;
 }
 
-.select {
-  padding-bottom: 20px;
+.timo-open {
+  display: inline-flex;
+  margin-right: 15px;
+}
+
+
+.button-nav {
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #278ae8;
 }
 
 .stop {
   background: transparent;
   border:none;
+}
+
+.input-append {
+  margin-top: 15px;
 }
 
 i.fa {
@@ -393,6 +424,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
       margin: 0;
       left: 0;
   }
+
+
+  .btn-secondary {
+      width: 100%;
+      margin: 0;
+      left: 0;
+  } 
+
+  .shortcuts {display: none;}
 
   .picture-profile > img {
     border-radius: 100%;

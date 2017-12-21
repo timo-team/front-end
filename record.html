@@ -37,11 +37,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
+      <a href="dashboard.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html">Tableau de bord</a></li>
+        <li><a href="dashboard.html">Tableau de bord</a></li>
         <li><a href="#">Mon profil</a></li>
         <li><a href="thankyou.html">Arrêter Timo</a></li>
       </ul>
@@ -54,20 +54,17 @@
 <section class="container">
 <div class="row">
   <div class="col-lg-12">
-    <h2>Timo est allumé</h2>
+    <h2 class="timo-open">Timo est allumé</h2>
+    <span class="select">
+      <label for="videoSource">Sélectionez votre caméra : </label><select id="videoSource"></select>
+    </span>
+
     <section>
-      <div class="select">
-        <label for="videoSource">Sélectionez votre caméra : </label><select id="videoSource"></select>
-      </div>
+      <p>Capturez et écoutez la scène:</p>
       <div id="sceneCapture">
-        <p>Astuce : <br/>
-          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>c</kbd> pour capturer la vidéo et en décrire la scène<br/>
-          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>e</kbd> pour analyser les émotions du ou des interlocuteur(s).<br/>
-          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>p</kbd> pour réécouter.
-        </p>
-        <button onclick="sceneDescription()">Décrire la scène</button>
-        <button onclick="sceneCaptureEmotion()">Décrire les émotions des interlocuteurs</button>
-        <button onclick="replaySpeech()"><i class="fas fa-volume-up"></i> Réécouter</button>
+        <button onclick="sceneDescription()" class="button-nav">Scène</button>
+        <button onclick="sceneCaptureEmotion()" class="button-nav">Emotions</button>
+        <button onclick="replaySpeech()" class="button-nav"><i class="fas fa-volume-up"></i> Réécouter</button>
       </div>
       <div class="detected-emotion">
         <p></p>
@@ -76,19 +73,30 @@
       <canvas id="rectCanvas"></canvas>
       <video autoplay muted></video>
       <canvas width="100%" height="auto" style="display:none;" id="videoCanvas"></canvas>
-    </section>
-    <form action="thankyou.html">
+ 
+     <form action="thankyou.html">
       <div class="row">
         <div class="col-lg-2"></div>
-        <div class="col-lg-8"><button onclick="closeVideo()" type="submit" class="btn btn-primary">Arrêter Timo</button></div>
+        <div class="col-lg-8"><button onclick="closeVideo()" type="submit" class="btn btn-secondary">Arrêter Timo</button></div>
         <div class="col-lg-2"></div>
       </div>
     </form>
+
+      <div class="shortcuts">
+        <h3>Astuces</h3>
+        <div>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>c</kbd> pour capturer la vidéo et en décrire la scène<br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>e</kbd> pour analyser les émotions du ou des interlocuteur(s).<br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>p</kbd> pour réécouter.
+        </div>
+      </div>
+    </section>
   </div>
 </div>
-
-
 </section>
+
+<footer><a href="http://www.timo-emotions.com" alt="Site d'informations de l'app Timo" type="text/css" target="_blank">www.timo-emotions.com</a></footer>
+
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script src="js/jquery-3.2.1.min.js"></script>
 <script src="js/script.js"></script>
