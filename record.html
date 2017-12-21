@@ -37,7 +37,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
+      <a href="dashboard.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
@@ -60,9 +60,10 @@
     </span>
 
     <section>
+      <p>Capturez et écoutez la scène:</p>
       <div id="sceneCapture">
-        <button onclick="sceneDescription()" class="button-nav">Décrire la scène</button>
-        <button onclick="sceneCaptureEmotion()" class="button-nav">Décrire les émotions des interlocuteurs</button>
+        <button onclick="sceneDescription()" class="button-nav">Scène</button>
+        <button onclick="sceneCaptureEmotion()" class="button-nav">Emotions</button>
         <button onclick="replaySpeech()" class="button-nav"><i class="fas fa-volume-up"></i> Réécouter</button>
       </div>
       <div class="detected-emotion">
@@ -72,20 +73,24 @@
       <canvas id="rectCanvas"></canvas>
       <video autoplay muted></video>
       <canvas width="100%" height="auto" style="display:none;" id="videoCanvas"></canvas>
-      <h3>Astuces</h3>
-      <div>
-        <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>c</kbd> pour capturer la vidéo et en décrire la scène<br/>
-        <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>e</kbd> pour analyser les émotions du ou des interlocuteur(s).<br/>
-        <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>p</kbd> pour réécouter.
-      </div>
-    </section>
-    <form action="thankyou.html">
+ 
+     <form action="thankyou.html">
       <div class="row">
         <div class="col-lg-2"></div>
-        <div class="col-lg-8"><button onclick="closeVideo()" type="submit" class="btn btn-primary">Arrêter Timo</button></div>
+        <div class="col-lg-8"><button onclick="closeVideo()" type="submit" class="btn btn-secondary">Arrêter Timo</button></div>
         <div class="col-lg-2"></div>
       </div>
     </form>
+
+      <div class="shortcuts">
+        <h3>Astuces</h3>
+        <div>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>c</kbd> pour capturer la vidéo et en décrire la scène<br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>e</kbd> pour analyser les émotions du ou des interlocuteur(s).<br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>p</kbd> pour réécouter.
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 </section>

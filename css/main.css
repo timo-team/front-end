@@ -79,6 +79,17 @@ footer {
     margin: 20px auto;
 }
 
+.btn-secondary {
+    background: #FFFFFF;
+    color: #9c51a0;
+    border: 2px solid #9c51a0;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+}
+
 .select-device {
     text-align: center;
 }
@@ -413,6 +424,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
       margin: 0;
       left: 0;
   }
+
+
+  .btn-secondary {
+      width: 100%;
+      margin: 0;
+      left: 0;
+  } 
+
+  .shortcuts {display: none;}
 
   .picture-profile > img {
     border-radius: 100%;
