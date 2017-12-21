@@ -83,8 +83,18 @@ select {
     height: 30px;
 }
 
-.select {
-  padding-bottom: 20px;
+.timo-open {
+  display: inline-flex;
+  margin-right: 15px;
+}
+
+
+.button-nav {
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #278ae8;
 }
 
 .stop {
