@@ -26,109 +26,54 @@
     <![endif]-->
   </head>
 
-<body>
+  <body id="login">
 
-<header class="gradient-color">
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
-      <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="index.html">Tableau de bord</a></li>
-        <li><a href="#">Mon profil</a></li>
-        <li><a href="record.html">Démarrer Timo</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-</header>
-
-<section class="container">
-<div class="row">
-  <div class="col-lg-12">
-    <h2>Bienvenue, Sandra</h2>
-
-    <div class="row info-meeting">
-      <div class="col-lg-6 hr">
-        <h3>Prochaine réunion</h3>
-        <div class="tag">Commence dans 5 minutes</div>
-
-        <div class="card reunion">
-          <h4>Entretien Individuel</h4>
-          <div class="date">Aujourd'hui - 16h à 17h</div>
-          <div class="audience"><a href="connaissance-timo.html">Audrey Johns</a></div>
+    <header class="gradient-color">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button> -->
+          <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
         </div>
-
-        <a href="#" type="text/css">Voir toutes mes réunions</a>
-
-      </div>
-      <div class="col-lg-6 hr">
-        <h3>Vos connaissances Timo</h3>
-        <div class="card contacts">
-          <ul>
-            <li>
-              <div class="row">
-                <div class="col-lg-11 col-xs-11"><a href="connaissance-timo.html" type="text/css">Audrey Johns</a></div>
-                <div class="col-lg-1 col-xs-1"><i class="fa fa-star"></i></div>
-              </div>
-            </li>  
-
-            <li>
-              <div class="row">
-                <div class="col-11"><a href="#">Jerôme Duplont</a></div>
-                <div class="col-1"><i class="fa fa-star"></i></div>
-              </div>
-            </li> 
-
-            <li>
-              <div class="row">
-                <div class="col-lg-11"><a href="#" type="text/css">Jason Roux</a></div>
-                <div class="col-lg-1"><i class="fa fa-star"></i></div>
-              </div>
-            </li>             
+        <!-- <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Tableau de bord</a></li>
+            <li><a href="#">Mon profil</a></li>
+            <li><a href="record.html">Démarrer Timo</a></li>
           </ul>
+        </div> -->
+      </div>
+    </nav>
+
+    </header>
+
+    <section class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="wrapper">
+          <form method="POST" class="form-signin" id="authentication-form">
+            <h2 class="form-signin-heading">J'accède à Timo</h2>
+            <div class="alert alert-danger" style="display:none;" role="alert">
+              <p></p>
+            </div>
+            <input type="text" id="username" class="form-control" name="username" placeholder="Email Address" required="" autofocus="" aria-label="username" aria-describedby="username"/>
+            <input type="password" id="password" class="form-control" name="password" placeholder="Password" required="" data-toggle="password" aria-label="password" aria-describedby="password"/>
+            <button id="submit-login" class="btn btn-lg btn-primary btn-block" type="submit">Me Connecter</button>
+          </form>
+
         </div>
       </div>
 
-    </div><!--infos meeting-->
 
-    <form action="record.html">
-      <div class="row">
-      
-      <!--  
-        <div class="col-lg-12 select-device">
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Selectionner mon appareil</label>
-        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-          <option selected>Mes lunettes connectées</option>
-          <option value="1">Mon ordinateur</option>
-          <option value="2">Mon téléphone </option>
-        </select>
-        </div> select device-->
-      </div>
+    </section>
 
-      <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8"><button type="submit" class="btn btn-primary">Démarrer Timo</button></div>
-        <div class="col-lg-2"></div>
-      </div>
-
-    </form>
-  </div>
-</div>
-
-
-</section>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
+    <script src="js/login.js"></script>
+  </body>
 </html>
