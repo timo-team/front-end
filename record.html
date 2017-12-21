@@ -12,6 +12,7 @@
 
     <link href="css/bootstrap-reboot.min.css" rel="stylesheet">
     <link href="css/bootstrap-grid.css" rel="stylesheet">
+    <link href="css/fontawesome-all.min" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 
@@ -34,7 +35,7 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span>
       </button>
       <a href="index.html" type="text/css" style="color:white;text-decoration:none;"><img src="img/logo.png" alt="Logo timo">Timo</a>
     </div>
@@ -57,6 +58,16 @@
     <section>
       <div class="select">
         <label for="videoSource">Sélectionez votre caméra : </label><select id="videoSource"></select>
+      </div>
+      <div id="sceneCapture">
+        <p>Astuce : <br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>c</kbd> pour capturer la vidéo et en décrire la scène<br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>e</kbd> pour analyser les émotions du ou des interlocuteur(s).<br/>
+          <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>p</kbd> pour réécouter.
+        </p>
+        <button onclick="sceneDescription()">Décrire la scène</button>
+        <button onclick="sceneCaptureEmotion()">Décrire les émotions des interlocuteurs</button>
+        <button onclick="replaySpeech()"><i class="fas fa-volume-up"></i> Réécouter</button>
       </div>
       <div class="detected-emotion">
         <p></p>

@@ -127,6 +127,26 @@ video{
   z-index: 9000;
 }
 
+kbd {
+  padding:0.1em 0.6em;
+  border:1px solid #ccc;
+  font-size:11px;
+  font-family:Arial,Helvetica,sans-serif;
+  background-color:#f7f7f7;
+  color:#333;
+  -moz-box-shadow:0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow:0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow:0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius:3px;
+  -webkit-border-radius:3px;
+  border-radius:3px;
+  display:inline-block;
+  margin:0 0.1em;
+  text-shadow:0 1px 0 #fff;
+  line-height:1.4;
+  white-space:nowrap;
+}
+
 .detected-emotion {display: none;}
 
 .header-profile {
@@ -189,7 +209,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
   margin: 0;
 }
 
-.contacts > ul > li, 
+.contacts > ul > li,
 .description > ul > li,
 .relation > ul > li,
 .interlocuteur > ul > li {
@@ -226,7 +246,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 
 .navbar-inverse {
     background-color: transparent;
-    border:0; 
+    border:0;
 }
 
 .navbar-collapse {
@@ -264,7 +284,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
       .navbar-nav>li>a {
       padding-top: 10px;
       padding-bottom: 0;
-  }    
+  }
 
 }
 
@@ -280,7 +300,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
 
 /*tablet portrait*/
 @media all and (max-width: 76px) {
-  
+
   .navbar-collapse {
       background: transparent;
   }
@@ -360,7 +380,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#278ae8', end
     padding: 0;
     margin: 30px 0;
   }
-  
+
   .hr {
     border-top: #c3c3c3 solid 1px;
     padding: 30px 0;
